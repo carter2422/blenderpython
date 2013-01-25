@@ -206,3 +206,7 @@ Item Panel & Batch Naming (space_view3d_item.py) -- by proxe
 Ivy Animation (ivygen_build_animation.py) -- by TheFinalCut
 	http://blenderartists.org/forum/showthread.php?278920-Growing-Ivy-with-a-little-script
 	
+IES files in Cycles (ies2cycles.py) -- by Lockal
+	http://blenderartists.org/forum/showthread.php?276063-IES-Lamps-to-Cycles
+	https://gist.github.com/4364512
+	
