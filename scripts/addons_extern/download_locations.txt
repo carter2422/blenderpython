@@ -1,0 +1,208 @@
+SMD export/QC compiler (io_smd_tools)
+	https://code.google.com/p/blender-smd/
+	(modified by bat3a to include __init__.py)
+	
+add_mesh_edge_profiles -- by Meta-Androcto
+	http://blenderartists.org/forum/showthread.php?256705
+	
+sun position -- by Xaire
+	http://wiki.blender.org/index.php/Extensions:2.6/Py/Scripts/3D_interaction/Sun_Position
+
+meshlint -- by rking
+	https://raw.github.com/ryanjosephking/meshlint/master/meshlint.py
+	http://blenderartists.org/forum/showthread.php?252575
+	
+mineblend (io_import_minecraft) -- by acro
+	https://sites.google.com/site/mineblend/
+	http://blenderartists.org/forum/showthread.php?237105#post2156456
+
+Aaron Symons collection -- by Aaron Symons
+	LoD swap
+		http://blenderartists.org/forum/showthread.php?256710
+	
+	render shots
+		http://blenderartists.org/forum/showthread.php?260905
+	
+online material library (online_mat_lib) -- by PeterCassetta
+	http://blenderartists.org/forum/showthread.php?256334
+		
+mitsuba exporter (mitsuba) -- by Francesc Juhe (fjuhec), Wenzel Jakob, Bartosz Styperek
+	https://www.mitsuba-renderer.org/hg/mitsuba-blender/
+	http://blenderartists.org/forum/showthread.php?270335
+	
+meshIO (blender26-meshio) -- by ousttrue
+	https://github.com/ousttrue/pymeshio
+	
+compositing presets (compositing_preset) -- by Fabio Russo (ruesp83)
+	http://wiki.blender.org/index.php/Extensions:2.6/Py/Scripts/Compositing/Compositing_Presets
+	
+import/export AFM mesh (io_import_mesh_afm_ascii) -- by zeffii
+	http://blenderartists.org/forum/showthread.php?205022#post2143557
+	
+import/export IFC (io_import_scene_ifc-32/64) -- by ifcopenshell
+	http://ifcopenshell.org/ifcblender.html
+	
+material library (matlib) -- by Mackraken
+	https://sites.google.com/site/aleonserra/home/scripts/matlib-vx
+	http://blenderartists.org/forum/showthread.php?222287
+	
+zmj100_collection -- by zmj100
+	http://blenderartists.org/forum/showthread.php?179375
+	
+scorpion81 collection -- by scorpion81
+	destrutability_editor
+		https://github.com/scorpion81/Blender-Destructability-Editor
+		http://blenderartists.org/forum/showthread.php?247559
+	
+	blendgit
+		https://github.com/scorpion81/Blender-Destructability-Editor
+	
+chromoly_ruler -- by paleajed/EWOCprojects
+	http://www.ewocprojects.be/chromoly_ruler.zip
+	http://blenderartists.org/forum/showthread.php?258576
+
+render_music -- by Fweeb
+	https://github.com/Fweeb/blender_render_music
+	http://wiki.blender.org/index.php/Extensions:2.6/Py/Scripts/Render/Render_Music
+	http://blenderartists.org/forum/showthread.php?248761
+	
+3delight exporter (render_3delight) -- by Matt Ebb
+	http://mattebb.com/3delightblender/
+	
+Suicidator city generator (suicidator_citygen) -- by piiichan
+	http://cgchan.com/suicidator
+	http://blenderartists.org/forum/showthread.php?140415
+	
+3d pixelated mesh (3d_pix_addon.py + 3d_pix_animado_addon.py) -- by liero
+	http://blenderartists.org/forum/showthread.php?207861
+	
+Add F-curve noise (add_fc_noise_script.py) -- by liero
+
+Cave generator (add_mesh_cave_gen.py) -- by sdfgeoff
+	http://blenderartists.org/forum/showthread.php?256775
+	
+Add surfaces (add_surface_plane_cone.py) -- by flokkievids, Meta-Androcto
+	http://blenderartists.org/forum/showthread.php?230552
+	
+Add vert (add_vert.py) -- by Meta-Androcto
+
+Mesh aggregator (aggregate_mesh.py) -- by liero
+	http://blenderartists.org/forum/showthread.php?228329
+	
+Blender camera calibration toolkit for image-assisted modeling (blam.py) -- by stuffmatic, ideasman42
+	https://github.com/stuffmatic/blam
+	http://blenderartists.org/forum/showthread.php?243370
+	
+Bounce -- by kgeogeo
+	http://blenderartists.org/forum/showthread.php?252514
+	
+Breakpoint -- by terrachild
+	http://goodspiritgraphics.com/software/tutorials/blender-tutorials/breakpoint-addon/
+	http://blenderartists.org/forum/showthread.php?232926
+	
+Context-sensitive menu -- by demohero
+	http://blenderartists.org/forum/showthread.php?228613
+	
+File browser search (file_browser_search.py) -- by Jakub Zolcik
+	http://wiki.blender.org/index.php/Extensions:2.6/Py/Scripts/Import-Export/File_Browser_Search
+	http://blenderartists.org/forum/showthread.php?243332
+	
+Ghosting (ghosting_addon.py) -- by liero
+	http://blenderartists.org/forum/showthread.php?229672
+	
+Layer manager for 2.63a (Layer1_4.py) -- by anfeo
+	http://blender-addon.blogspot.com.au/2012/05/layer-manager-14-for-blender-263a.html
+	http://blenderartists.org/forum/showthread.php?255225
+	
+Parent empty (parent_empty_addon.py) -- by liero
+	http://blenderartists.org/forum/showthread.php?223613
+	
+Slow parent (slow_parent_addon.py) -- by liero
+	http://blenderartists.org/forum/showthread.php?216705
+	
+time offset (time_offset_addon.py) -- by liero
+
+EWOCprojects collection -- by paleajed
+	mes_laprelax.py
+	mesh_innerweld.py
+	mesh_quadder.py
+	mesh_fanconnect.py
+	mesh_straightenplus.py
+	object_fastorigin.py
+	mesh_filletplus.py
+	object_creaprim.py
+	mesh_polyredux.py
+	mesh_selproject.py
+	mesh_floodsel.py
+	mesh_deathguppie.py
+	mesh_edgetune.py
+	mesh__edgegrow.py
+	mesh_paredge.py
+	paint_greaseparticles.py
+	space_view3d_rotview.py
+	space_view3d_transpref.py
+		http://www.ewocprojects.be/scripts.html
+		
+Mesh bevel (mesh_bevel.py) -- by Witold Jaworski
+	http://airplanes3d.net/scripts-252_e.xml
+	
+Mesh transfer (lichtwerk_MeshTransfer.py) -- by 2d23d
+	http://blenderartists.org/forum/showthread.php?244981
+	
+fastloops (metalliandy_mesh_fastloop_016.py) -- by metalliandy
+	http://blenderartists.org/forum/showthread.php?206989
+	
+mesh selection topokit -- by dustractor
+	http://blenderartists.org/forum/showthread.php?237618
+	
+advanced alignment tool (object_advanced_align_tools0_8.py) -- by Lell, anfeo
+	http://blenderartists.org/forum/showthread.php?256114
+	
+object_align -- by zmj100
+
+align to active object (object_align_to_active_object.py) -- by chromoly
+
+multi-object renaming (object_multi_rename.py) -- by Maximilian Eham
+
+Oscurart 
+	export raw mesh as text (oscurart_io_txt_rawmeshes.py)
+		http://www.oscurart.blogspot.com.au/2012/07/blender-addon-oscurart-io-txt-rawmeshes.html
+	
+	Random vertices
+		http://www.oscurart.blogspot.com.au/2012/04/blender-addon-oscurart-tools-29.html
+		
+	object to weightmap (oscurart_object_to_weightmap.py)
+	
+	copy mirror constraints (oscurart_copy_mirror_constraints.py)
+		http://www.oscurart.blogspot.com.au/2011/09/blender-addon-copy-constraints-mirror_29.html
+
+Orphan cleanup (orphan_cleanup.py) -- by Phil Cote
+	http://www.blenderaddons.com/scripts/orphan_cleanup.php
+	
+Particle mesher / particle fluid tools (PFluidTools032.py) -- by bashi
+	http://blenderartists.org/forum/showthread.php?233619
+	
+Quick prefs (space_view3d_quickPrefs.py) -- by Sean Olson (LiquidApe)
+	http://wiki.blender.org/index.php/Extensions:2.6/Py/Scripts/3D_interaction/QuickPrefs
+	
+Unicode helper (unicode_helper.py) -- by ramunas
+	http://blender.lt/?page_id=417
+	
+Stereoscopic camera rig (stereoscopic_camera_1_6_7.py) -- by Sebastian Schneider
+	http://www.noeol.de/s3d/
+	
+Face bones (rig_face_bone_tool.py) -- by khuuyj
+	https://sites.google.com/site/khuuyjblend/home/blender/script/face-bone-tool
+	
+View armature data (space_view3d_armature_data.py) -- by proxe
+
+Stored viewport views (space_view3d_stored_views.py) -- by nfloyd
+	http://wiki.blender.org/index.php/Extensions:2.6/Py/Scripts/3D_interaction/stored_views
+	http://blenderartists.org/forum/showthread.php?t=218403
+	
+Item Panel & Batch Naming (space_view3d_item.py) -- by proxe
+	http://blenderartists.org/forum/showthread.php?272086-Addon-Item-Panel-amp-Batch-Naming
+	
+Ivy Animation (ivygen_build_animation.py) -- by TheFinalCut
+	http://blenderartists.org/forum/showthread.php?278920-Growing-Ivy-with-a-little-script
+	
