@@ -210,3 +210,9 @@ IES files in Cycles (ies2cycles.py) -- by Lockal
 	http://blenderartists.org/forum/showthread.php?276063-IES-Lamps-to-Cycles
 	https://gist.github.com/4364512
 	
+Yafaray renderer 32-bit (yafaray) -- by yafaray team
+	http://graphicall.org/107
+	
+Typing Text (typing_text_addon.py) -- by jayfelsman
+	http://blenderartists.org/forum/showthread.php?261705-Animated-Typing-Text-addon
+	
