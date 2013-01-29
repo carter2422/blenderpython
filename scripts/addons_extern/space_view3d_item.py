@@ -18,7 +18,7 @@
 
 bl_info = {'name': 'Item Panel & Batch Naming',
            'author': 'proxe',
-           'version': (0, 6),
+           'version': (0, 6, 3),
            'blender': (2, 66, 0),
            'location': '3D View > Properties Panel',
            'warning': "Work in Progress",
@@ -34,15 +34,17 @@ import bpy
 #
 #    Author: Trentin Frederick (a.k.a, proxe)
 #    Contact: trentin.frederick@gmail.com, proxe.err0r@gmail.com
-#    Version: 0.6
+#    Version: 0.6.3
 #    Naming Conventions: API friendly
 #    PEP8 Compliance: Partial
 #
 # ##### END INFO BLOCK #####
 
-# ##### BEGIN VERSION INFO BLOCK #####
+# ##### BEGIN VERSION BLOCK #####
 #
-#    HISTORY:
+#    0.6.3
+#    - Restored ability to pupulate panel for the active objects/bones
+#    constraints, modifiers, bone constraints.
 #    0.6
 #    - Removed ability to populate the item panel with all selected objects,
 #    objects constraints, modifiers, object's data, bones and bone constraints.
@@ -73,8 +75,6 @@ import bpy
 #
 #    TODO:
 #    0.7
-#    - Restore ability to pupulate panel for the active objects/bones
-#    constraints, modifiers, bone constraints.
 #    - Add ability to populate the panel with active objects materials, and
 #    their textures if applicable.
 #    - Add ability to populate the panel with the active objects particle
@@ -86,10 +86,13 @@ import bpy
 #    naming operator.
 #    0.9
 #    - Unregister blenders default item panel when this addon is active
+#    - Create a target menu for each item type to be renamed, this will allow
+#    the user to decide which of the item types (e.g. mirror modifiers only)
+#    will be effected by the batch naming proccess.
 #    1.0
 #    - Commit addon
 #
-# ##### END VERSION INFO BLOCK #####
+# ##### END VERSION BLOCK #####
 
 ###############
 ## FUNCTIONS ##
@@ -266,7 +269,7 @@ class VIEW3D_OT_batch_naming(Operator):
         props = self.properties
 
         row = col.row(align=True)  # Bug? icon_only doesn't appear to work.
-                                   # using empty text perameter instead.
+                                   # using empty text parameter instead.
   # Target Row
         split = col.split(align=True)
         split.prop(props, 'batch_objects', text="", icon='OBJECT_DATA')
@@ -330,42 +333,23 @@ from bpy.types import Panel
 class ItemPanel(bpy.types.PropertyGroup):
     "Property group for item panel."
   # TODO: item panel property values
-    view_options = BoolProperty(name='Hide view options',
+    view_options = BoolProperty(name='Show/hide view options',
                                 description="Toggle view options for this pane"
                                 "l, the state that they are in is uneffected b"
                                 "y this action.", default=False)
 
-    view_objects = BoolProperty(name='View selected objects', description="Dis"
-                                "play all selected objects in a list below the"
-                                " active object name input field.",
-                                default=False)
-
-    view_constraints = BoolProperty(name='View selected object\'s constraints',
+    view_constraints = BoolProperty(name='View object constraints',
                                     description="Display the object constraint"
-                                    "s in a list for all selected objects unde"
-                                    "rneath each of the selected objects name "
-                                    "input fields.", default=False)
+                                    "s of the active object.", default=False)
 
-    view_modifiers = BoolProperty(name='View selected object\'s modifiers',
-                                  description="Display the object modifiers in"
-                                  " a list for all selected objects underneath"
-                                  " each of the selected objects name input fi"
-                                  "elds.", default=False)
+    view_modifiers = BoolProperty(name='View object modifiers', description="D"
+                                  "isplay the object modifiers of the active o"
+                                  "bject.", default=False)
 
-    view_object_data = BoolProperty(name='View selected object\'s data',
-                                    description="Display the object data in a "
-                                    "list below the object data name input fie"
-                                    "ld for all selected objects.",
-                                    default=False)
-
-    view_bones = BoolProperty(name='View selected bones', description="Display"
-                              " all selected bones in a list below the active "
-                              "bone name input field.", default=False)
-
-    view_bone_constraints = BoolProperty(name='View selected bone\'s constrain'
-                                         'ts', description="Display the bone c"
-                                         "onstraints for each of the selected "
-                                         "pose bones.", default=False)
+    view_bone_constraints = BoolProperty(name='View bone constraints',
+                                         description="Display the bone constra"
+                                         "ints of the active pose bone.",
+                                         default=False)
 
   # View 3D Item (PT)
 class VIEW3D_PT_item_panel(Panel):
@@ -373,45 +357,62 @@ class VIEW3D_PT_item_panel(Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_label = 'Item'
-  # TODO: restore draw header property
-    #def draw_header(self, context):
-        #"docstring"
-        #layout = self.layout
-        #wm_props = context.window_manager.itempanel
 
-        #layout.prop(wm_props, 'view_options', text="")
+    def draw_header(self, context):
+        "docstring"
+        layout = self.layout
+        wm_props = context.window_manager.itempanel
+
+        layout.prop(wm_props, 'view_options', text="")
 
     def draw(self, context):
         "docstring"
         layout = self.layout
         col = layout.column()
-        #wm_props = context.window_manager.itempanel
-  # TODO: draw item panel properties
+        wm_props = context.window_manager.itempanel
   # View options row
-        #split = col.split(align=True)
-        #if wm_prop.view_options:
-            #split.prop(wm_props, 'view_objects', text="", icon='OBJECT_DATA')
-            #split.prop(wm_props, 'view_constraints', text="",
-                       #icon='CONSTRAINT')
-            #split.prop(wm_props, 'view_modifiers', text="", icon='MODIFIER')
-            #split.prop(wm_props, 'view_object_data', text="", icon='DATA_MESH')
-            #if context.selected_bone:
-                #split.prop(wm_props, 'view_bones', text="", icon='BONE_DATA')
-            #if context.selected_pose_bone:
-                #split.prop(wm_props, 'view_bone_constraints', text="",
-                           #icon='CONSTRAINT_BONE')
-
-  # Data name input props
+        split = col.split(align=True)
+        if wm_props.view_options:
+            split.prop(wm_props, 'view_constraints', text="",
+                       icon='CONSTRAINT')
+            split.prop(wm_props, 'view_modifiers', text="", icon='MODIFIER')
+            if context.object.mode in 'POSE':
+                split.prop(wm_props, 'view_bone_constraints', text="",
+                           icon='CONSTRAINT_BONE')
+  # Data
         row = col.row(align=True)
         row.template_ID(context.scene.objects, 'active')
         row.operator('view3d.batch_naming', text="", icon='AUTO')
 
+        if wm_props.view_constraints:
+            for con in context.active_object.constraints:
+                row = col.row(align=True)
+                sub = row.row()
+                sub.scale_x = 1.6
+                sub.label(text="", icon='DOT')
+                if con.mute:
+                    ico = 'RESTRICT_VIEW_ON'
+                else:
+                    ico = 'RESTRICT_VIEW_OFF'
+                row.prop(con, 'mute', text="", icon=ico)
+                row.prop(con, 'name', text="")
+        if wm_props.view_modifiers:
+            for mod in context.active_object.modifiers:
+                row = col.row(align=True)
+                sub = row.row()
+                sub.scale_x = 1.6
+                sub.label(text="", icon='DOT')
+                if mod.show_viewport:
+                    ico = 'RESTRICT_VIEW_OFF'
+                else:
+                    ico = 'RESTRICT_VIEW_ON'
+                row.prop(mod, 'show_viewport', text="", icon=ico)
+                row.prop(mod, 'name', text="")
         if context.object.type in 'EMPTY':
             if context.object.empty_draw_type in 'IMAGE':
                 row = col.row(align=True)
                 row.template_ID(context.active_object, 'data',
                                 open='image.open', unlink='image.unlink')
-
         else:
             row = col.row(align=True)
             row.template_ID(context.active_object, 'data')
@@ -420,17 +421,21 @@ class VIEW3D_PT_item_panel(Panel):
             row = col.row(align=True)
             sub = row.row()
             sub.scale_x = 1.6
-            if context.active_bone.hide:
-                ico = 'RESTRICT_VIEW_ON'
-            else:
-                ico = 'RESTRICT_VIEW_OFF'
-            sub.prop(context.active_bone, 'hide', text="", icon=ico)
+            sub.label(text="", icon='BONE_DATA')
             row.prop(context.active_bone, 'name', text="")
-            if context.active_bone.hide_select:
-                ico = 'RESTRICT_SELECT_ON'
-            else:
-                ico = 'RESTRICT_SELECT_OFF'
-            row.prop(context.active_bone, 'hide_select', text="", icon=ico)
+            if context.object.mode in 'POSE':
+                if wm_props.view_bone_constraints:
+                    for con in context.active_pose_bone.constraints:
+                        row = col.row(align=True)
+                        sub = row.row()
+                        sub.scale_x = 1.6
+                        sub.label(text="", icon='DOT')
+                        if con.mute:
+                            ico = 'RESTRICT_VIEW_ON'
+                        else:
+                            ico = 'RESTRICT_VIEW_OFF'
+                        row.prop(con, 'mute', text="", icon=ico)
+                        row.prop(con, 'name', text="")
 
 ##############
 ## REGISTER ##
@@ -438,10 +443,9 @@ class VIEW3D_PT_item_panel(Panel):
 
 def register():
     "Register"
-    #wm = bpy.types.WindowManager
+    wm = bpy.types.WindowManager
     bpy.utils.register_module(__name__)
-    # TODO: register item panel props
-    # wm.itempanel = bpy.props.PointerProperty(type=ItemPanel)
+    wm.itempanel = bpy.props.PointerProperty(type=ItemPanel)
 
 def unregister():
     "Unregister"
