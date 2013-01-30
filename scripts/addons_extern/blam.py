@@ -22,7 +22,7 @@ import math, cmath
 bl_info = { \
     'name': 'The Blender camera calibration toolkit',
     'author': 'Per Gantelius',
-    'version': (0, 0, 1),
+    'version': (0, 0, 4),
     'blender': (2, 6, 0),
     'api': 41524,
     'location': 'Move Clip Editor > Tools Panel > Static Camera Calibration and 3D View > Tools Panel > Photo Modeling Tools',
@@ -1789,10 +1789,10 @@ class CameraCalibrationOperator(bpy.types.Operator):
             if scn.optical_center_type == 'camdata':
                 #get the principal point location from camera data
                 P = [x for x in  activeSpace.clip.tracking.camera.principal]
-                print("camera data optical center", P[:])
+                #print("camera data optical center", P[:])
                 P[0] /= imageWidth
                 P[1] /= imageHeight
-                print("normlz. optical center", P[:])
+                #print("normlz. optical center", P[:])
                 P = self.relImgCoords2ImgPlaneCoords(P, imageWidth, imageHeight)
             elif scn.optical_center_type == 'compute':
                 if len(vpLineSets) < 3:
@@ -1884,6 +1884,8 @@ class CameraCalibrationOperator(bpy.types.Operator):
         
 
 def initSceneProps():
+    scn = bpy.context.scene
+    
     '''
     Focal length and orientation estimation stuff
     '''
