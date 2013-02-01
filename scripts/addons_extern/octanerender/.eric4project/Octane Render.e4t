@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Tasks SYSTEM "Tasks-4.2.dtd">
+<!-- eric4 tasks file for project Octane Render -->
+<!-- Saved: 2011-01-30, 08:20:44 -->
+<Tasks version="4.2">
+  <Task priority="1" completed="False" bugfix="False">
+    <Summary>TODO: implement this in C? dunno how it should be called...</Summary>
+    <Description></Description>
+    <Created>2011-01-30, 08:14:14</Created>
+    <Resource>
+      <Filename>export.py</Filename>
+      <Linenumber>347</Linenumber>
+    </Resource>
+  </Task>
+</Tasks>

@@ -1,0 +1,109 @@
+# ##### BEGIN GPL LICENSE BLOCK #####
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 3
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software Foundation,
+#  Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+#
+# ##### END GPL LICENSE BLOCK #####
+
+# Original framework from Netrender
+# Original Octane script from Enrico Cerica
+# This script by Lionel Zamouth
+
+# This directory is a Python package.
+
+
+bl_info = {
+	"name": "Octane Render Extended",
+	"author": "Lionel Zamouth",
+	"version": (0,91),
+	"blender": (2, 5, 6),
+	"api": 30000,
+	"location": "Info Header - Engine dropdown",
+	"description": "Extended Octane Render addon - UNSUPPORTED",
+	"warning": " This is NOT the official script from Refractive Software",
+	"wiki_url": "",
+	"tracker_url": "",
+	"support": 'COMMUNITY',
+	"category": "Render"}
+Version = 'v0.91'
+Supported = False
+
+#bl_info = {
+#	"name": "Octane Render",
+#	"author": "Enrico Cerica & Lionel Zamouth",
+#	"version": (0,1),
+#	"blender": (2, 5, 6),
+#	"api": 30000,
+#	"location": "Info Header - Engine dropdown",
+#	"description": "Official Octane Render addon from Refractive Software",
+#	"warning": "",
+#	"wiki_url": "http://www.refractivesoftware.com",
+#	"tracker_url": "",
+#	"support": 'COMMUNITY',
+#	"category": "Render"}
+#Version = 'v0.1'
+#Supported = True
+
+Verbose = True
+Status_Display = False
+Status_Text = ""
+Status_Severity = 0
+replace_project = False
+
+launchOctane = False
+flyMode = False
+pullImage = False
+maxSamples = 0
+frameStart = 1
+frameStop = 1
+delayed_copies = []
+
+# To support reload properly, try to access a package var, if it's there, reload everything
+if "octane_data" in locals():
+	import imp
+	imp.reload(settings)
+	imp.reload(utils)
+	imp.reload(operators)
+	if Supported == True:
+		imp.reload(ui_official)
+	else:
+		imp.reload(ui_unsupported)
+		imp.reload(ui_material)
+		imp.reload(ui_texture)
+	imp.reload(properties)
+	imp.reload(export)
+	imp.reload(engine)
+else:
+	from octanerender import settings
+	from octanerender import utils
+	from octanerender import operators
+	if Supported:
+		from octanerender import ui_official
+	else:
+		from octanerender import ui_unsupported
+		from octanerender import ui_material
+		from octanerender import ui_texture
+	from octanerender import properties
+	from octanerender import export
+	from octanerender import engine
+
+octane_data = True
+
+def register():
+	import bpy
+	settings.addProperties()
+	
+def unregister():
+	import bpy
+	del bpy.types.Scene.octane_render
