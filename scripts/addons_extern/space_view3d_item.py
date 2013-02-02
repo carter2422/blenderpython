@@ -50,6 +50,8 @@ import bpy
 #    0.6
 #    - Removed ability to populate the item panel with all selected objects,
 #    objects constraints, modifiers, object's data, bones and bone constraints.
+#    - Removed visibility and selectability options from the left and right of
+#    active bone name input field in favor of the default item panel's format.
 #    - Code cleanup
 #    0.5
 #    - Optimized code, followed many PEP8 guidelines.
@@ -88,12 +90,20 @@ import bpy
 #    naming operator.
 #    0.9
 #    - See if there is something I can do to make the menus for types a bit
-#    more easily readable, i.e. recreate the same menu that
-#    operator_menu_enum of object.add_modifier would create.
+#    more easily readable, i.e. recreate the same menu that operator_menu_enum
+#    of object.add_modifier would create.
 #    - If everything is working well, remove some of the props default values
 #    so that the value is stored for the next time it is called.
 #    - Unregister blenders default item panel when this addon is active
 #    1.0
+#    - Add ability to display vertex groups and shapekeys in item panel, vertex
+#    groups should have a quick select and deselect option, shapekeys ideally
+#    would have the slider available but just where it should be placed is
+#    unclear.
+#    - Create batch naming functionality for vertex groups & shapekeys, ideally
+#    this would be accessed from within a menu rather then as part of the
+#    'target row', may as whell include options for uv maps and vertex colors.
+#    - Actually fill out the docstrings.
 #    - Commit addon
 #
 # ##### END VERSION BLOCK #####
@@ -118,7 +128,9 @@ def rename(self, data_path, batch_name, find, replace, prefix, suffix,
         target = target[trim_start:]
     if trim_end > 0:
         target = target[:-trim_end]
-    target = re.sub(find, replace, target)
+    target = re.sub(find, replace, target)  # re will send an error if using
+                                            # toolshelf in the find field while
+                                            # typing out the expression.
     target = prefix + target + suffix
     if data_path in {'con', 'mod'}:
         data_path.name = target
@@ -158,7 +170,7 @@ def batch_rename(self, context, batch_name, find, replace, prefix, suffix,
                     rename(self, data_path, batch_name, find, replace, prefix,
                            suffix, trim_start, trim_end)
                 else:
-                    if constraint_type in contraint.type:
+                    if constraint_type in constraint.type:
                         data_path = constraint
                         rename(self, data_path, batch_name, find, replace,
                                prefix, suffix, trim_start, trim_end)
@@ -186,20 +198,17 @@ def batch_rename(self, context, batch_name, find, replace, prefix, suffix,
   # Objects Data
     if batch_objects_data:
         for object in context.selected_objects:
-            if object.data.users == 1:  # TODO: object.data.users > 1
-                if object_type in 'ALL':
-                    data_path = object.data
-                    rename(self, data_path, batch_name, find, replace, prefix,
-                           suffix, trim_start, trim_end)
-                else:
-                    if object_type in object.type:
-                        data_path = object.data
-                        rename(self, data_path, batch_name, find, replace,
-                               prefix, suffix, trim_start, trim_end)
-                    else:
-                        pass
+            if object_type in 'ALL':
+                data_path = object.data
+                rename(self, data_path, batch_name, find, replace, prefix,
+                       suffix, trim_start, trim_end)
             else:
-                pass
+                if object_type in object.type:
+                    data_path = object.data
+                    rename(self, data_path, batch_name, find, replace,
+                           prefix, suffix, trim_start, trim_end)
+                else:
+                    pass
     else:
         pass
   # Bones
@@ -393,6 +402,11 @@ class VIEW3D_OT_batch_naming(Operator):
                     ('ALL', 'All Modifiers', ""),
                     ], default='ALL')
 
+    @classmethod
+    def poll(cls, context):
+        """docstring"""
+        return context.space_data.type in 'VIEW_3D'
+
     def draw(self, context):
         """docstring"""
         layout = self.layout
@@ -440,11 +454,6 @@ class VIEW3D_OT_batch_naming(Operator):
         row.label(text="Trim End:")
         row.prop(props, 'trim_end', text="")
 
-    @classmethod
-    def poll(cls, context):
-        """docstring"""
-        return context.space_data.type in 'VIEW_3D'
-
     def execute(self, context):
         """docstring"""
         batch_rename(self, context, self.batch_name, self.find, self.replace,
@@ -454,13 +463,12 @@ class VIEW3D_OT_batch_naming(Operator):
                      self.batch_bones, self.batch_bone_constraints,
                      self.object_type, self.constraint_type,
                      self.modifier_type)
-
         return {'FINISHED'}
 
     def invoke(self, context, event):
         """docstring"""
         wm = context.window_manager
-        wm.invoke_props_dialog(self, width=200)
+        wm.invoke_props_dialog(self, width=225)
 
         return {'RUNNING_MODAL'}
 
@@ -468,11 +476,11 @@ class VIEW3D_OT_batch_naming(Operator):
 ## INTERFACE ##
 ###############
   # Imports
-from bpy.types import Panel
+from bpy.types import Panel, PropertyGroup
 
 
   # Item Panel Property Group
-class ItemPanel(bpy.types.PropertyGroup):
+class Item(PropertyGroup):
     """Property group for item panel."""
   # TODO: item panel property values
     view_options = BoolProperty(name='Show/hide view options',
@@ -492,7 +500,7 @@ class ItemPanel(bpy.types.PropertyGroup):
 
 
   # View 3D Item (PT)
-class VIEW3D_PT_item_panel(Panel):
+class VIEW3D_PT_item(Panel):
     """docstring"""
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
@@ -501,7 +509,7 @@ class VIEW3D_PT_item_panel(Panel):
     def draw_header(self, context):
         """docstring"""
         layout = self.layout
-        wm_props = context.window_manager.itempanel
+        wm_props = context.window_manager.item
 
         layout.prop(wm_props, 'view_options', text="")
 
@@ -509,7 +517,7 @@ class VIEW3D_PT_item_panel(Panel):
         """docstring"""
         layout = self.layout
         col = layout.column()
-        wm_props = context.window_manager.itempanel
+        wm_props = context.window_manager.item
   # View options row
         split = col.split(align=True)
         if wm_props.view_options:
@@ -600,7 +608,8 @@ def register():
     """Register"""
     wm = bpy.types.WindowManager
     bpy.utils.register_module(__name__)
-    wm.itempanel = bpy.props.PointerProperty(type=ItemPanel)
+    wm.item = bpy.props.PointerProperty(type=Item)
+    bpy.context.window_manager.item.name = 'Item Panel Properties'
 
 
 def unregister():
@@ -608,7 +617,7 @@ def unregister():
     wm = bpy.types.WindowManager
     bpy.utils.unregister_module(__name__)
     try:
-        del wm.itempanel
+        del wm.item
     except:
         pass
 
