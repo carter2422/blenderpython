@@ -142,6 +142,8 @@ EWOCprojects collection -- by paleajed
 	space_view3d_rotview.py
 	space_view3d_transpref.py
 		http://www.ewocprojects.be/scripts.html
+	object_decouple.py
+	object_keeptrans.py
 		
 Mesh bevel (mesh_bevel.py) -- by Witold Jaworski
 	http://airplanes3d.net/scripts-252_e.xml
@@ -219,3 +221,6 @@ Typing Text (typing_text_addon.py) -- by jayfelsman
 Octane Render exporter + octinstances
 	http://render.otoy.com/forum/viewtopic.php?p=96373#p96373
 	http://render.otoy.com/forum/viewtopic.php?f=32&t=22656
+	
+Bullet Constraints Tools (copy_particles_to_sim.py) -- by bashi
+	http://blenderartists.org/forum/showthread.php?275823
