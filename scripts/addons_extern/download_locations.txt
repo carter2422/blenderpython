@@ -222,5 +222,5 @@ Octane Render exporter + octinstances
 	http://render.otoy.com/forum/viewtopic.php?p=96373#p96373
 	http://render.otoy.com/forum/viewtopic.php?f=32&t=22656
 	
-Bullet Constraints Tools (copy_particles_to_sim.py) -- by bashi
-	http://blenderartists.org/forum/showthread.php?275823
+Copy Particles to Rigid Bodies (copy_particles_to_sim.py) -- by liero
+	http://blenderartists.org/forum/showthread.php?279329
