@@ -207,6 +207,7 @@ Item Panel & Batch Naming (space_view3d_item.py) -- by proxe
 	
 Ivy Animation (ivygen_build_animation.py) -- by TheFinalCut
 	http://blenderartists.org/forum/showthread.php?279723
+	https://bioblog3d.wordpress.com/2013/02/06/iga-is-ready/
 	
 IES files in Cycles (ies2cycles.py) -- by Lockal
 	http://blenderartists.org/forum/showthread.php?276063-IES-Lamps-to-Cycles
@@ -224,3 +225,4 @@ Octane Render exporter + octinstances
 	
 Copy Particles to Rigid Bodies (copy_particles_to_sim.py) -- by liero
 	http://blenderartists.org/forum/showthread.php?279329
+	
